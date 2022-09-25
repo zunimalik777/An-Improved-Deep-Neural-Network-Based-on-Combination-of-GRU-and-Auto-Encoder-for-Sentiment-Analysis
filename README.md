@@ -10,9 +10,7 @@ This tutorial introduces how to train  Normalize Auto-Encoded GRU (NAE-GRU) mode
 To train proposed and comparative approaches  with python libraries, you need to put each document into a line without punctuations. So, the output file should include all sentences and each sentence should be in a line. Moreover, Gensim library provides methods to do this preprocessing step. However, tokenize function is modified for sentence classification. You can run preprocess.py to modify your corpus.
 
 # Training NAE-GRU Model
-After preprocessing the dataset, training NAE-GRU model with gensim library is very easy. You can use the code below to create NAE-GRU model. First argument is revised datasets: 
-
-This command creates an output file which is binary file for vectors for words. You can download pretrained model (https://drive.google.com/drive/folders/1IBMTAGtZ4DakSCyAoA4j7Ch0Ft1aFoww) which is created by following steps in this tutorial.
+After preprocessing the dataset, training NAE-GRU model with gensim library is very easy. You can use the code below to create NAE-GRU model. 
 
 # JavaScript
 const OpenTC = require('opencc');
