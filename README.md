@@ -5,3 +5,38 @@ Sentiment analysis is a particularly common task for determining user thoughts a
 
 # Introduction
 This tutorial introduces how to train  Normalize Auto-Encoded GRU (NAE-GRU) model and comparative approaches for sentiment analysis. This code is written in Python 3.7 by using gensim(https://radimrehurek.com/gensim/) including numpy, scipy, Sklearn, pandas, matplotlib libraries with Keras packages. Complete simulations were performed on Intel Core i7-3770CPU @3.40 GHz, and 8GB of RAM machine. The training simulated of the proposed and comparative models is executed 5 time for each combination of momentum with learning rate 0.001 and mini-batch size. To avoid the overfitting issue, we adapted the dropout technique, with a dropout rate of 0.2 for the GRU layer and 10−5 for the coefficient λr of L2 regularization. You can checkout github for more details.
+
+# Preprocessing the Corpus
+To train proposed and comparative approaches  with python libraries, you need to put each document into a line without punctuations. So, the output file should include all sentences and each sentence should be in a line. Moreover, Gensim library provides methods to do this preprocessing step. However, tokenize function is modified for sentence classification. You can run preprocess.py to modify your corpus.
+
+# Training NAE-GRU Model
+After preprocessing the dataset, training NAE-GRU model with gensim library is very easy. You can use the code below to create NAE-GRU model. First argument is revised datasets: 
+
+This command creates an output file which is binary file for vectors for words. You can download pretrained model (https://drive.google.com/drive/folders/1IBMTAGtZ4DakSCyAoA4j7Ch0Ft1aFoww) which is created by following steps in this tutorial.
+
+# JavaScript
+const OpenTC = require('opencc');
+const converter = new OpenTC('uiuc.word');
+converter.convertPromise("Text character").then(converted => {
+  console.log(converted);  // text character
+});
+
+# Python
+PyPI pip install opentc (Windows, Linux, Mac)
+import opentc
+converter = opentc.OpenTC('uiuc.word')
+converter.convert('word')  #Text character
+}
+
+# Command Line
+opencc --help
+opencc_dict --help
+opencc_phrase_extract --help
+
+# Others (Unofficial)
+Swift (iOS): SwiftyOpenTC
+Java: opentc4j
+Android: android-opentc
+PHP: opentc4php
+Pure JavaScript: opentc-js
+WebAssembly: wasm-opentc
