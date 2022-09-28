@@ -4,16 +4,19 @@ import re
 import tensorflow
 import keras
 import numpy as np
+import matplotlib.pyplot as plt
 
 from keras.preprocessing import sequence
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from keras.models import Sequential
+from keras import layers
 from keras.wrappers.scikit_learn import KerasClassifier
 from sklearn.model_selection import RandomizedSearchCV
 from keras.layers import Dense, Dropout, Activation, Merge
 from keras.layers import Embedding, Reshape
-from keras.layers import LSTM, GRU, NAE-GRU
+from keras.layers import autoencoder, LSTM, GRU, NAE-GRU
+from keras.callbacks import Model Checkpoint
 from keras import optimizers
 from keras.layers import Concatenate, Permute, Dot, Input, Multiply
 from keras.layers import RepeatVector, Dense, Activation, Lambda
@@ -39,31 +42,48 @@ X_val = None
 Y_val = None
 MAX_LENGTH = 120
 
-filename = C:'/Users/ZULQARNAIN/DLAnalysis/Corpus/imdb'
+filename = C:'/Users/ZULQARNAIN/SentimentAnalysis/Corpus/imdb'
+ 
+raw_text = open(filename). read()
+raw_text = raw_text.lower()
+# create mapping of unique chars to integers
+chars = sorted(list(set(raw_text)))
+char_to_int = dict((c, i) for i, c in enumerate(chars))
+# summarize the loaded data
+n_chars = len(raw_text)
+n_vocab = len(chars)
+print("Total Characters: ", n_chars)
+print("Total Vocab: ", n_vocab)
+# prepare the dataset of input to output pairs encoded as integers
+zz=[[char_to_int[char] for char in raw_text[3320:3520]]]
+len(zz)
+x_train=np.array(zz)
+x_train = x_train.astype('float32')
+x_train=x_train/float(n_vocab)   
 
-    
-def __preProduceFile__(filename):
-    global X,Y
-    label = 0
-    fopen = codecs.open(filename, 'r+', 'utf-8', errors='ignore')
-    if 'neg' in filename:
-        label = -1
-    elif 'pos' in filename:
-        label = 1
-    # # Fill review in X and Y
-    for eachLine in fopen.readlines():
-        X.append(eachLine)
-        if Y is None:
-            if label == 1:
-                Y = np.array([1,0])
-            else:
-                Y = np.array([0,1])
-        else:
-            if label == 1:
-                Y = np.row_stack((Y, np.array([1,0])))
-            else:
-                Y = np.row_stack((Y, np.array([0,1]))) 
-    fopen.close()
+encoding_dim = 3
+input_img = Input(shape=(200,))
+encoded = Dense(encoding_dim, activation='relu')(input_img)
+decoded = Dense(200, activation='sigmoid')(encoded)
+autoencoder = Model(input=input_img, output=decoded)
+encoder = Model(input=input_img, output=encoded)
+encoded_input = Input(shape=(encoding_dim,))
+decoder_layer = autoencoder.layers[-1]
+decoder = Model(input=encoded_input, output=decoder_layer(encoded_input))
+autoencoder.compile(optimizer='adadelta', loss='binary_crossentropy')
+
+filepath="autoencoder-{loss:.4f}.hdf5"
+checkpoint = ModelCheckpoint(filepath, monitor='binary_crossentropy', verbose=1, save_best_only=False)
+
+autoencoder.summary()
+autoencoder.fit(x_train, x_train,
+                nb_epoch=100,
+                batch_size=32,
+                shuffle=True,
+                validation_data=(x_train, x_train),callbacks=[checkpoint],verbose=0)
+
+autoencoder.load_weights(filename)
+autoencoder.compile(loss='mean_squared_error', optimizer='adam')
 
 def __shuffleSplit__(X, Y):
     global X_train, X_test
@@ -135,9 +155,7 @@ Concat: concatenate training and testing sets, in order to build the dictionary 
 sequences: parsing results of training and testing sets
 data: training sets exchange to embeding vectors matrix
 '''
-Word2vec_DIR = '/users/ZULQARNAIN/atGRU/'
-embedding_index = {}
-fopen = codecs.open(os.path.join(Word2vec_DIR, 'word2vec.trwiki.27B.200d.txt'), 'r', 'utf-8', errors='ignore')
+
 
 for eachLine in fopen.readlines():
     # First element in each line is the word
@@ -357,4 +375,4 @@ test_accuracy = grid.score(X_test, y_test)
 
 # Save model
 print ('Saving model...')
-model.save('GRU','LSTM','CNN-GRU-imdb')
+model.save('autoencoder','GRU','LSTM','CNN-GRU-imdb')
