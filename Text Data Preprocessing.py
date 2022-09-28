@@ -7,6 +7,13 @@ from nltk import word_tokenize, sent_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import LancasterStemmer, WordNetLemmatizer
 
+import pandas as pd
+
+filepath_dict = {'yelp':   'data/sentiment_analysis/yelp_labelled.txt',
+                 'amazon': 'data/sentiment_analysis/amazon_cells_labelled.txt',
+                 'imdb':   'data/sentiment_analysis/imdb_labelled.txt'}
+                 'SSTb':   'data/sentiment_analysis/SSTb_labelled.txt'}
+
 # Noise Removal
 
 def strip_html(text):
