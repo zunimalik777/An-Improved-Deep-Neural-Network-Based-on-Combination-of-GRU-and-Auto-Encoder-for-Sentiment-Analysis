@@ -6,7 +6,7 @@ Sentiment analysis is a particularly common task for determining user thoughts a
 # Introduction
 This tutorial introduces how to train  Normalize Auto-Encoded GRU (NAE-GRU) model and comparative approaches for sentiment analysis. This code is written in Python 3.7 by using gensim(https://radimrehurek.com/gensim/) including numpy, scipy, Sklearn, pandas, matplotlib libraries with Keras packages. Complete simulations were performed on Intel Core i7-3770CPU @3.40 GHz, and 8GB of RAM machine. The training simulated of the proposed and comparative models is executed 5 time for each combination of momentum with learning rate 0.001 and mini-batch size. To avoid the overfitting issue, we adapted the dropout technique, with a dropout rate of 0.2 for the GRU layer and 10−5 for the coefficient λr of L2 regularization. You can checkout github for more details.
 
-# Preprocessing the Corpus
+# Preprocessing the Datasets
 To train proposed and comparative approaches  with python libraries, you need to put each document into a line without punctuations. So, the output file should include all sentences and each sentence should be in a line. Moreover, Gensim library provides methods to do this preprocessing step. However, tokenize function is modified for sentence classification. You can run preprocess.py to modify your corpus.
 
 # Training NAE-GRU Model
