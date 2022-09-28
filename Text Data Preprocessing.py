@@ -8,11 +8,11 @@ from nltk.corpus import stopwords
 from nltk.stem import LancasterStemmer, WordNetLemmatizer
 
 import pandas as pd
-
-filepath_dict = {'yelp':   'data/sentiment_analysis/yelp_labelled.txt',
-                 'amazon': 'data/sentiment_analysis/amazon_cells_labelled.txt',
-                 'imdb':   'data/sentiment_analysis/imdb_labelled.txt'}
-                 'SSTb':   'data/sentiment_analysis/SSTb_labelled.txt'}
+C:'/Users/ZULQARNAIN/SentimentAnalysis/Corpus/imdb
+filepath_dict = {'yelp':   'Users/ZULQARNAIN/sentiment_analysis/Corpus/yelp_labelled.txt',
+                 'amazon': 'Users/ZULQARNAIN/sentiment_analysis/Corpus/amazon_cells_labelled.txt',
+                 'imdb':   'Users/ZULQARNAIN/sentiment_analysis/Corpus/imdb_labelled.txt'}
+                 'SSTb':   'Users/ZULQARNAIN/sentiment_analysis/Corpus/SSTb_labelled.txt'}
 
 # Noise Removal
 
